@@ -12,13 +12,18 @@ function mySubmit(form) {
     if (formData.get('symbol').length != 0) {
         symbol = formData.get('symbol');
     }
-    document.getElementById("result").value = randomString(len, symbol, hash.toString());
-    console.log(randomString(len, symbol, hash.toString()))
+
+    let result = randomString(len, symbol, hash.toString());
+    while(notContains(result)) {
+        console.log(result);
+        result = randomString(len, symbol, CryptoJS.SHA256(result).toString());
+    }
+    document.getElementById("result").value = result;
     return false;
 }
 
 function randomString(leng, charSet, hash) {
-    charSet = charSet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    charSet = charSet + 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~@_/+:';
     let randomString = '';
     let arr = mySplit(hash, 4);
     for (let i = 0; i < leng; i++) {
@@ -35,4 +40,12 @@ function mySplit(str, leng) {
         arr.push("0x" + str.slice(index, index += leng));
     }
     return arr;
+}
+
+function notContains(str) {
+    const number=/\d/;
+    const lowerLetter = /[a-z]/;
+    const upLetter = /[A-Z]/;
+    const char = /[~@_/+:]/;
+    return !number.test(str) || !lowerLetter.test(str) || !upLetter.test(str) || !char.test(str);
 }

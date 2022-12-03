@@ -38,7 +38,7 @@
 
             <div class="field-row-stacked" style="width: 200px">
                 <label for="length">密码长度（可选填，应在8-16间,不填则使用默认长度16）:</label>
-                <input type="text" id="length" name="length" oninput="if(value>16)value=16;if(value<8)value=8"
+                <input type="number" id="length" name="length" oninput="if(value>16)value=16;if(value<8)value=8" min="8" max="16"
                     onkeyup="value=value.replace(/[^\d]/g,'')">
             </div>
 

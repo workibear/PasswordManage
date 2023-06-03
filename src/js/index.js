@@ -19,6 +19,7 @@ function mySubmit(form) {
         result = randomString(len, symbol, CryptoJS.SHA256(result).toString());
     }
     document.getElementById("result").value = result;
+    console.log(quickSort([5,4,3,2,1],0,4));
     return false;
 }
 
@@ -49,3 +50,28 @@ function notContains(str) {
     const char = /[~@_/+:]/;
     return !number.test(str) || !lowerLetter.test(str) || !upLetter.test(str) || !char.test(str);
 }
+
+function partition(arr, low, high) {
+    let pivot = arr[low];
+    while (low < high) {
+      while (low < high && arr[high] > pivot) {
+        --high;
+      }
+      arr[low] = arr[high];
+      while (low < high && arr[low] <= pivot) {
+        ++low;
+      }
+      arr[high] = arr[low];
+    }
+    arr[low] = pivot;
+    return low;
+  }
+  
+  function quickSort(arr, low, high) {
+    if (low < high) {
+      let pivot = partition(arr, low, high);
+      quickSort(arr, low, pivot - 1);
+      quickSort(arr, pivot + 1, high);
+    }
+    return arr;
+  }
